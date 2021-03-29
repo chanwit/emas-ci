@@ -1,0 +1,17 @@
+name: run
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out
+        uses: actions/checkout@v2
+      - name: install
+        shell: bash
+        run: |
+          curl -sfL https://get.sameproject.org | bash -
