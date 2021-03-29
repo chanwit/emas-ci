@@ -15,3 +15,21 @@ jobs:
         shell: bash
         run: |
           curl -sfL https://get.sameproject.org | bash -
+      - name: setup credentails
+        shell: bash
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+          cat ~/.kube/config
+          mkdir -p ~/.same
+          touch ~/.same/config
+          echo "activecontext: " >> ~/.same/config.yaml
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          mkdir -p ~/.local/bin/kubectl
+          mv ./kubectl ~/.local/bin/kubectl
+          export PATH=$PATH:~/.local/bin/kubectl
+      - name: run same program
+        shell: bash
+        run: |
+          same program create --file same.yaml
+          same program run --file same.yaml --experiment-name "${{ github.repository }}" --run-name "${{ github.sha }}"`
