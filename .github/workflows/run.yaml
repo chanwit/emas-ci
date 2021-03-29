@@ -11,10 +11,18 @@ jobs:
     steps:
       - name: check out
         uses: actions/checkout@v2
-      - name: install
+      - name: install tool binaries
         shell: bash
         run: |
           curl -sfL https://get.sameproject.org | bash -
+          curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo mv ./kubectl /usr/local/bin/kubectl
+      - name: bootstrap flux
+        shell: bash
+        run: |
+          export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          flux bootstrap github --owner=chanwit --repository=emas-ci --token-auth --path=cluster
       - name: setup credentails
         shell: bash
         run: |
@@ -24,12 +32,11 @@ jobs:
           mkdir -p ~/.same
           touch ~/.same/config
           echo "activecontext: " >> ~/.same/config.yaml
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          mkdir -p ~/.local/bin/kubectl
-          mv ./kubectl ~/.local/bin/kubectl
-          export PATH=$PATH:~/.local/bin/kubectl
+          # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          # mkdir -p ~/.local/bin/kubectl
+          # mv ./kubectl ~/.local/bin/kubectl
+          # export PATH=$PATH:~/.local/bin/kubectl
       - name: run same program
         shell: bash
         run: |
-          same init
           same program run --file same.yaml --experiment-name "${{ github.repository }}" --run-name "${{ github.sha }}"`
