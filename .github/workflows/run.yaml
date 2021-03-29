@@ -31,5 +31,5 @@ jobs:
       - name: run same program
         shell: bash
         run: |
-          same program create --file same.yaml
+          same init
           same program run --file same.yaml --experiment-name "${{ github.repository }}" --run-name "${{ github.sha }}"`
