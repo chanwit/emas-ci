@@ -34,7 +34,7 @@ jobs:
       - name: install required packages
         run: |
           python3 -m pip install -U setuptools wheel pip
-          pip install -y poetry kfp
+          pip install poetry kfp
 
       - name: setup credentails
         shell: bash
