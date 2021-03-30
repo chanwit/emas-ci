@@ -14,11 +14,11 @@ jobs:
       - name: install tool binaries
         shell: bash
         run: |
+          curl -L0 https://get.sameproject.org | bash -
           # curl -sfL https://get.sameproject.org | bash -
           # curl -L0 https://sameproject.org | bash -          
-
-          curl -fsSL https://github.com/SAME-Project/SAMPLE-CLI-TESTER/releases/download/0.0.40/same_0.0.40_linux_amd64.tar.gz | tar xfz -
-          sudo mv ./same /usr/local/bin/same
+          # curl -fsSL https://github.com/SAME-Project/SAMPLE-CLI-TESTER/releases/download/0.0.40/same_0.0.40_linux_amd64.tar.gz | tar xfz -
+          # sudo mv ./same /usr/local/bin/same
           same --version
 
           curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
