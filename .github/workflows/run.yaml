@@ -14,9 +14,13 @@ jobs:
       - name: install tool binaries
         shell: bash
         run: |
-          curl -sfL https://get.sameproject.org | bash -
+          # curl -sfL https://get.sameproject.org | bash -
+          # curl -L0 https://sameproject.org | bash -          
+
+          curl -fsSL https://github.com/SAME-Project/SAMPLE-CLI-TESTER/releases/download/0.0.40/same_0.0.40_linux_amd64.tar.gz | tar xfz -
+          mv same /usr/local/bin/same
           same --version
-          # curl -L0 https://sameproject.org | bash -
+
           curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           sudo mv ./kubectl /usr/local/bin/kubectl
