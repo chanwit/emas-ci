@@ -36,4 +36,4 @@ jobs:
         shell: bash
         run: |
           same init
-          same program run --file same.yaml --experiment-name "${{ github.repository }}" --run-name "${{ github.sha }}"`
+          same program run --file same.yaml --experiment-name "${{ github.repository }}" --run-name "${{ github.sha }}"
